@@ -33,5 +33,15 @@ def get_env(
             user_provider=user_provider,
             task_index=task_index,
         )
+    elif env_name == "tictactoe_discrete":
+        from tau_bench.envs.tictactoe_discrete import TicTacToeEnv
+        
+        return TicTacToeEnv(
+            user_strategy=user_strategy,
+            user_model=user_model,
+            task_split=task_split,
+            user_provider=user_provider,
+            task_index=task_index,
+        )
     else:
         raise ValueError(f"Unknown environment: {env_name}")

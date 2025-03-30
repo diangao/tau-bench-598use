@@ -1,4 +1,5 @@
 import json
+from typing import Dict, List
 
 from pydantic import BaseModel
 
@@ -16,16 +17,16 @@ from tau_bench.model_utils.api.datapoint import (
 class TokenUsage(BaseModel):
     input_tokens: int
     output_tokens: int
-    by_primitive: dict[str, "TokenUsage"]
+    by_primitive: Dict[str, "TokenUsage"]
 
 
-def batch_token_analysis(dps: list[Datapoint], encoding_for_model: str = "gpt-4o") -> TokenUsage:
+def batch_token_analysis(dps: List[Datapoint], encoding_for_model: str = "gpt-4o") -> TokenUsage:
     import tiktoken
 
     enc = tiktoken.encoding_for_model(encoding_for_model)
     # very rough estimates
-    inputs_by_primitive: dict[str, list[str]] = {}
-    outputs_by_primitive: dict[str, list[str]] = {}
+    inputs_by_primitive: Dict[str, List[str]] = {}
+    outputs_by_primitive: Dict[str, List[str]] = {}
     for dp in dps:
         input = json.dumps({k: v for k, v in dp.model_dump().items() if k != "response"})
         inputs_by_primitive.setdefault(type(dp).__name__, []).append(input)

@@ -1,5 +1,5 @@
 import abc
-from typing import Any
+from typing import Any, Dict
 
 
 class Tool(abc.ABC):
@@ -8,5 +8,5 @@ class Tool(abc.ABC):
         raise NotImplementedError
 
     @staticmethod
-    def get_info() -> dict[str, Any]:
+    def get_info() -> Dict[str, Any]:
         raise NotImplementedError
